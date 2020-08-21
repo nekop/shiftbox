@@ -1,8 +1,12 @@
 #!/bin/bash
 
-# Usage: oc-dump PROJECT
-# 
 # This script produces a dump of the specified project. It includes all namespaced resources information and pod logs.
+#
+# Usage:
+#
+# $ curl -LO https://raw.githubusercontent.com/nekop/shiftbox/master/oc-dump
+# $ chmod +x ./oc-dump
+# $ ./oc-dump PROJECT
 
 PROJECT=$1
 OC="oc -n $PROJECT"
