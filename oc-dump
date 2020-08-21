@@ -24,7 +24,7 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ ! "$($OC auth can-i get pod/logs)" == "yes" ]; then
-  echo "User $($OC whoami) does not have permission to read the pod logs in $PROJECT"
+  echo "User $($OC whoami) does not have permissions to read the pod logs in $PROJECT"
   exit 1
 fi
 
@@ -38,7 +38,7 @@ echo "Generating dump for project $PROJECT, it may take about 20 sec - 2 min"
   $OC version
   $OC status
   $OC get project $PROJECT -o yaml
-  API_RESOURCES=$($OC api-resources -o name --namespaced --verbs=list | awk '{printf "%s%s",sep,$0; sep=","}'
+  API_RESOURCES=$($OC api-resources -o name --namespaced --verbs=list | awk '{printf "%s%s",sep,$0; sep=","}')
   $OC get --ignore-not-found $API_RESOURCES -o wide
   $OC get --ignore-not-found $API_RESOURCES -o yaml
   # oc get events with absolute timestamp, human readable troubleshoorting friendly format
