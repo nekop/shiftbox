@@ -64,6 +64,7 @@ echo "Generating dump for project $PROJECT, it may take about 20 sec - 2 min"
     $OC get storageclass -o yaml
     $OC get pv -o wide
     $OC get pv -o yaml
+    $OC get csr
     $OC get pods -o wide --all-namespaces
   fi
   date
