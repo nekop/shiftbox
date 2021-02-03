@@ -38,6 +38,8 @@ echo "Generating dump for project $PROJECT, it may take about 20 sec - 2 min"
   $OC version
   $OC status
   $OC get project $PROJECT -o yaml
+  # Combine api-resources output into single parameter to minimize the number of API requests. Do not DoS attack the API by for each loop.
+  # You might want to search "get secret" but it doens't work because of the combined single parameter format. Instead, search the output format like: zegrep -n '^secret|^  kind: Secret' output.txt.gz
   API_RESOURCES=$($OC api-resources -o name --namespaced --verbs=list | awk '{printf "%s%s",sep,$0; sep=","}')
   $OC get --ignore-not-found $API_RESOURCES -o wide
   $OC get --ignore-not-found $API_RESOURCES -o yaml
