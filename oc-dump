@@ -2,6 +2,8 @@
 
 # This script produces a dump of the specified project. It includes all namespaced resources information and pod logs.
 #
+# https://access.redhat.com/solutions/3340581
+#
 # Usage:
 #
 # $ curl -LO https://raw.githubusercontent.com/nekop/shiftbox/master/oc-dump
