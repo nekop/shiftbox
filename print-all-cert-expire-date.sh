@@ -8,7 +8,7 @@
 ##
 
 function usage(){
-    echo "Script Version 1.0
+    echo "Script Version 1.1
     usage: print-all-cert-expire-date.sh [-e] [-h]
 
     Optional arguments:
