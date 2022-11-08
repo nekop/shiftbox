@@ -4,7 +4,7 @@
 
 ##
 ## Oiginal code: https://github.com/nekop/shiftbox/blob/master/v3-print-all-certs-expire-date
-## Script to print all TLS cert expire date for OpenShift v3
+## Script to print all TLS Cert Expire Date for OpenShift v3
 ##
 
 function usage(){
@@ -15,7 +15,7 @@ function usage(){
     pattern                         host pattern
     -l,                             To check Certificates in /etc/origin/node on localhost
     -s,                             To check Certificates in /etc/origin/node OVER SSH (SSH password-less and SUDO Without Pass REQUERED)
-    -e,                             To set the DAYS by which the Certificates will EXPIRE (Default 30 Days)
+    -e,                             To set the DAYS by which the Certificates will EXPIRE (Default 60 Days)
     -h, --help                      Show this help message and exit
     ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
     "
@@ -34,7 +34,7 @@ if [ "$1" != "" ]; then
                                   ;;
           -s )                    CHECK_OVER_SSH=true
                                   ;;
-          -e )                    [[ $2 =~ ^[0-9]+$ ]] && shift && DAYS_NUMBER=$1 || DAYS_NUMBER=30
+          -e )                    [[ $2 =~ ^[0-9]+$ ]] && shift && DAYS_NUMBER=$1 || DAYS_NUMBER=60
                                   ;;
           -h | --help )           usage
                                   exit
@@ -57,7 +57,7 @@ function show_cert() {
   else
     echo -ne "${RED}"
     echo "${CERT_VALIDITY}"
-    echo "--------------------------- EXPIRED in ${DAYS_NUMBER} ---------------------------"
+    echo "--------------------------- EXPIRED within ${DAYS_NUMBER} DAYS ---------------------------"
     echo -ne "${NC}"
   fi
 }
@@ -67,7 +67,7 @@ function show_cert() {
 ## Process all service serving cert secrets
 echo -e "\n\n------------------------- Process all SERVICE with TLS cert on Secret -------------------------"
 oc get service --no-headers --all-namespaces -o custom-columns='NAMESPACE:{metadata.namespace},NAME:{metadata.name},SERVING CERT:{metadata.annotations.service\.alpha\.openshift\.io/serving-cert-secret-name}' |
-while IFS= read line; do
+while IFS= read -r line; do
    items=( $line )
    NAMESPACE=${items[0]}
    SERVICE=${items[1]}
