@@ -8,14 +8,14 @@
 ##
 
 function usage(){
-    echo "Script Version 1.1
+    echo "Script Version 1.2
     usage: print-all-cert-expire-date.sh [-e] [-h]
 
     Optional arguments:
     pattern                         host pattern
     -l,                             To check Certificates in /etc/origin/node on localhost
     -s,                             To check Certificates in /etc/origin/node OVER SSH (SSH password-less and SUDO Without Pass REQUERED)
-    -e,                             To set the DAYS by which the Certificates will EXPIRE (Default 60 Days)
+    -e,                             To set the missing DAYS to check before Certificates EXPIRES (Default 60 Days)
     -h, --help                      Show this help message and exit
     ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
     "
@@ -25,6 +25,8 @@ function usage(){
 RED='\033[0;31m' # RED
 NC='\033[0m' # No Color
 
+# Default Missing Days before CERTS expire
+DAYS_NUMBER=60
 
 # Set Optional arguments if present
 if [ "$1" != "" ]; then
@@ -34,7 +36,7 @@ if [ "$1" != "" ]; then
                                   ;;
           -s )                    CHECK_OVER_SSH=true
                                   ;;
-          -e )                    [[ $2 =~ ^[0-9]+$ ]] && shift && DAYS_NUMBER=$1 || DAYS_NUMBER=60
+          -e )                    [[ $2 =~ ^[0-9]+$ ]] && shift && DAYS_NUMBER=$1
                                   ;;
           -h | --help )           usage
                                   exit
